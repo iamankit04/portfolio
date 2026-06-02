@@ -6,7 +6,7 @@ import {
   SiPython, 
   SiC, 
   SiHtml5, 
-  SiCss3, 
+  SiCss, 
   SiNextdotjs, 
   SiReact, 
   SiNodedotjs, 
