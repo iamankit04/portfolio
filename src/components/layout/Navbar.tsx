@@ -13,6 +13,7 @@ const navLinks = [
   { name: "Skills", href: "#skills" },
   { name: "Coding Stats", href: "#coding-profiles" },
   { name: "Timeline", href: "#timeline" },
+  { name: "Contact", href: "#contact" },
 ];
 
 export const Navbar = () => {
@@ -78,12 +79,6 @@ export const Navbar = () => {
             </a>
           ))}
             <ThemeToggle />
-            <a
-              href="#contact"
-              className="px-5 py-2 text-sm font-medium bg-black/10 dark:bg-black/5 dark:bg-white/5 hover:bg-black/20 dark:hover:bg-white/10 text-foreground rounded-full transition-colors border border-black/10 dark:border-black/10 dark:border-white/10 hover:border-accent/50"
-            >
-              Contact
-            </a>
           </nav>
 
           {/* Mobile Nav Toggle */}
@@ -120,13 +115,6 @@ export const Navbar = () => {
                 {link.name}
               </a>
             ))}
-            <a
-              href="#contact"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="mt-2 text-center px-5 py-3 text-sm font-medium bg-accent text-black rounded-lg transition-colors"
-            >
-              Contact Me
-            </a>
           </motion.nav>
         )}
       </AnimatePresence>
