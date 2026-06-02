@@ -11,6 +11,7 @@ const navLinks = [
   { name: "About", href: "#about" },
   { name: "Projects", href: "#projects" },
   { name: "Skills", href: "#skills" },
+  { name: "Coding Stats", href: "#coding-profiles" },
   { name: "Timeline", href: "#timeline" },
 ];
 
@@ -23,13 +24,13 @@ export const Navbar = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
       
-      const sections = navLinks.map(link => link.name.toLowerCase());
       let current = "";
       
-      for (const section of sections) {
-        const element = document.getElementById(section);
+      for (const link of navLinks) {
+        const id = link.href.substring(1);
+        const element = document.getElementById(id);
         if (element && window.scrollY >= element.offsetTop - 150) {
-          current = section;
+          current = link.href;
         }
       }
       setActiveSection(current);
@@ -63,11 +64,11 @@ export const Navbar = () => {
               href={link.href}
               className={cn(
                 "text-sm font-medium transition-colors hover:text-accent relative",
-                activeSection === link.name.toLowerCase() ? "text-accent" : "text-foreground/80"
+                activeSection === link.href ? "text-accent" : "text-foreground/80"
               )}
             >
               {link.name}
-              {activeSection === link.name.toLowerCase() && (
+              {activeSection === link.href && (
                 <motion.div
                   layoutId="activeSection"
                   className="absolute -bottom-1 left-0 right-0 h-[2px] bg-accent rounded-full"
@@ -113,7 +114,7 @@ export const Navbar = () => {
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={cn(
                   "text-lg font-medium py-2 transition-colors",
-                  activeSection === link.name.toLowerCase() ? "text-accent" : "text-foreground/80"
+                  activeSection === link.href ? "text-accent" : "text-foreground/80"
                 )}
               >
                 {link.name}

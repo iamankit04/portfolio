@@ -16,7 +16,11 @@ import {
   SiMongodb,
   SiGit,
   SiGithub,
-  SiMysql
+  SiMysql,
+  SiLeetcode,
+  SiGeeksforgeeks,
+  SiCodechef,
+  SiCodeforces
 } from "react-icons/si";
 import { VscVscode } from "react-icons/vsc";
 
@@ -156,3 +160,24 @@ export const highlights = [
     ]
   }
 ];
+
+export const codingProfiles = {
+  problemSolving: [
+    { platform: "LeetCode", icon: SiLeetcode, link: "https://leetcode.com/u/iamankit07/", stats: "1500+ Rating | 700+ Solved" },
+    { platform: "GeeksforGeeks", icon: SiGeeksforgeeks, link: "https://auth.geeksforgeeks.org/user/ankitfors9j0/", stats: "150+ Solved" },
+    { platform: "CodeChef", icon: SiCodechef, link: "https://www.codechef.com/users/iamankit04", stats: "Max Rating: 1200+" },
+    { platform: "Codeforces", icon: SiCodeforces, link: "https://codeforces.com/profile/iamankit04", stats: "CP" },
+    { platform: "CodeStudio", icon: Code2, link: "https://www.naukri.com/code360/profile/iamankit04", stats: "NINJA DOMINATOR" }
+  ],
+  development: {
+    platform: "GitHub",
+    icon: SiGithub,
+    link: "https://github.com/iamankit04",
+    username: "iamankit04",
+    stats: [
+      { label: "Public Repos", value: "20+" },
+      { label: "Stars Earned", value: "10+" },
+      { label: "Total Commits", value: "500+" }
+    ]
+  }
+};
