@@ -1,0 +1,14 @@
+services:
+  antigravity:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: antigravity
+    ports:
+      - "3000:3000"
+    env_file:
+      - path: .env.local
+        required: false   # OK if .env.local doesn't exist
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped

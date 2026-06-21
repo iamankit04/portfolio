@@ -34,3 +34,49 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Docker
+
+The project ships with a production-ready, multi-stage `Dockerfile` and a `docker-compose.yml`.
+
+### Prerequisites
+
+- [Docker](https://docs.docker.com/get-docker/) ≥ 24
+- [Docker Compose](https://docs.docker.com/compose/) v2 (bundled with Docker Desktop)
+
+### Build the image
+
+```bash
+docker build -t antigravity .
+```
+
+### Run with Docker Compose
+
+```bash
+# Start in the foreground (Ctrl-C to stop)
+docker compose up
+
+# Start detached (background)
+docker compose up -d
+```
+
+The app will be available at **http://localhost:3000**.
+
+Environment variables are loaded automatically from `.env.local` (if it exists).
+Never commit `.env.local` — it is already listed in `.dockerignore` and `.gitignore`.
+
+### Stop / tear down
+
+```bash
+# Stop without removing containers
+docker compose stop
+
+# Stop and remove containers
+docker compose down
+```
+
+### Rebuild after code changes
+
+```bash
+docker compose up --build
+```
