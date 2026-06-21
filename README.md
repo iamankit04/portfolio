@@ -47,7 +47,7 @@ The project ships with a production-ready, multi-stage `Dockerfile` and a `docke
 ### Build the image
 
 ```bash
-docker build -t antigravity .
+docker build -t ankitportfolio .
 ```
 
 ### Run with Docker Compose

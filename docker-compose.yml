@@ -1,9 +1,10 @@
 services:
-  antigravity:
+  ankitportfolio:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: antigravity
+    container_name: ankitportfolio
+    image: ankitportfolio
     ports:
       - "3000:3000"
     env_file:
