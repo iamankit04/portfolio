@@ -2,7 +2,7 @@
 
 import { SectionWrapper } from "../layout/SectionWrapper";
 import { projects } from "@/lib/data";
-import { ExternalLink, Code2 } from "lucide-react";
+import { ExternalLink, ArrowUpRight } from "lucide-react";
 import { FaGithub as Github } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
@@ -11,101 +11,137 @@ export const Projects = () => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
   return (
-    <SectionWrapper id="projects" className="bg-white/[0.01]">
-      <div className="container mx-auto px-6">
-        <div className="max-w-3xl mb-12">
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
-            Featured <span className="text-accent">Work</span>.
+    <SectionWrapper id="projects">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="max-w-2xl">
+          <p className="font-mono text-xs tracking-[0.2em] text-accent uppercase">
+            Projects
+          </p>
+          <h2 className="font-display mt-3 text-3xl font-semibold tracking-tight md:text-5xl">
+            Featured work
           </h2>
-          <div className="w-20 h-1 bg-accent rounded-full mb-8" />
-          <p className="text-foreground/70 text-lg">
-            Real-world applications built to solve complex problems.
+          <div className="section-rule mt-5" />
+          <p className="mt-5 text-lg text-muted">
+            Production-minded platforms built for multi-role workflows, payments,
+            and real-time experiences.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div className="mt-14 space-y-8">
           {projects.map((project, idx) => (
-            <motion.div
-              key={idx}
+            <motion.article
+              key={project.title}
               layout
-              className="rounded-3xl bg-white/[0.02] border border-white/10 overflow-hidden group hover:border-accent/40 transition-colors"
+              className="group border border-border bg-surface-elevated transition-colors hover:border-accent/40"
             >
-              <div className="p-8">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center gap-3">
-                    <div className="p-3 bg-white/5 rounded-xl text-accent">
-                      <Code2 className="w-6 h-6" />
+              <div className="grid gap-0 lg:grid-cols-[1.4fr_0.8fr]">
+                <div className="p-8 md:p-10">
+                  <div className="flex flex-wrap items-start justify-between gap-4">
+                    <div>
+                      <p className="font-mono text-xs tracking-widest text-muted uppercase">
+                        0{idx + 1}
+                      </p>
+                      <h3 className="font-display mt-2 text-3xl font-semibold tracking-tight">
+                        {project.title}
+                      </h3>
                     </div>
-                    <h3 className="text-2xl font-bold text-white">{project.title}</h3>
+                    <div className="flex gap-2">
+                      <a
+                        href={project.links.github}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex h-10 w-10 items-center justify-center border border-border text-foreground transition-colors hover:border-accent hover:text-accent"
+                        aria-label={`${project.title} GitHub`}
+                      >
+                        <Github className="h-4 w-4" />
+                      </a>
+                      <a
+                        href={project.links.live}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex h-10 items-center gap-2 border border-accent bg-accent px-4 text-sm font-semibold text-white transition-all hover:brightness-110"
+                        aria-label={`${project.title} live demo`}
+                      >
+                        Live
+                        <ExternalLink className="h-3.5 w-3.5" />
+                      </a>
+                    </div>
                   </div>
-                  <div className="flex gap-3">
-                    <a
-                      href={project.links.github}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="p-2 bg-white/5 rounded-full hover:bg-white/10 transition-colors text-white"
-                    >
-                      <Github className="w-5 h-5" />
-                    </a>
-                    <a
-                      href={project.links.live}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="p-2 bg-accent/10 rounded-full hover:bg-accent/20 transition-colors text-accent"
-                    >
-                      <ExternalLink className="w-5 h-5" />
-                    </a>
+
+                  <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted">
+                    {project.description}
+                  </p>
+
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {project.techStack.map((tech) => (
+                      <span
+                        key={tech}
+                        className="border border-border px-3 py-1 font-mono text-xs text-muted"
+                      >
+                        {tech}
+                      </span>
+                    ))}
                   </div>
+
+                  <button
+                    onClick={() =>
+                      setExpandedIndex(expandedIndex === idx ? null : idx)
+                    }
+                    className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-accent transition-colors hover:text-foreground"
+                  >
+                    {expandedIndex === idx
+                      ? "Hide details"
+                      : "View engineering details"}
+                    <ArrowUpRight
+                      className={`h-4 w-4 transition-transform ${
+                        expandedIndex === idx ? "rotate-45" : ""
+                      }`}
+                    />
+                  </button>
+
+                  <AnimatePresence>
+                    {expandedIndex === idx && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="mt-6 border-t border-border pt-6">
+                          <p className="text-sm leading-relaxed text-muted">
+                            {project.longDescription}
+                          </p>
+                          <ul className="mt-4 space-y-2">
+                            {project.features.map((feature) => (
+                              <li
+                                key={feature}
+                                className="flex items-start gap-3 text-sm text-foreground/85"
+                              >
+                                <span className="mt-2 h-1 w-1 shrink-0 bg-accent" />
+                                {feature}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
 
-                <p className="text-foreground/80 mb-6 leading-relaxed">
-                  {project.description}
-                </p>
-
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.techStack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-3 py-1 bg-white/5 border border-white/5 rounded-full text-xs font-mono text-foreground/70 group-hover:border-white/10 transition-colors"
-                    >
-                      {tech}
-                    </span>
-                  ))}
+                <div className="flex min-h-[180px] flex-col justify-end border-t border-border bg-ink-soft p-8 lg:border-t-0 lg:border-l">
+                  <p className="font-mono text-xs tracking-widest text-muted uppercase">
+                    Stack focus
+                  </p>
+                  <p className="font-display mt-3 text-2xl font-semibold leading-snug">
+                    {project.techStack.slice(0, 3).join(" · ")}
+                  </p>
+                  <p className="mt-4 text-sm text-muted">
+                    Full-stack TypeScript delivery with auth, payments, and
+                    role-aware UX.
+                  </p>
                 </div>
-
-                <button
-                  onClick={() => setExpandedIndex(expandedIndex === idx ? null : idx)}
-                  className="text-sm font-medium text-accent hover:text-accent/80 transition-colors flex items-center gap-2"
-                >
-                  {expandedIndex === idx ? "Hide Details" : "View Core Engineering Features"}
-                </button>
-
-                <AnimatePresence>
-                  {expandedIndex === idx && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="pt-6 mt-6 border-t border-white/10">
-                        <p className="text-sm text-foreground/70 mb-4">
-                          {project.longDescription}
-                        </p>
-                        <ul className="space-y-2">
-                          {project.features.map((feature, i) => (
-                            <li key={i} className="flex items-start gap-2 text-sm text-foreground/80">
-                              <span className="text-accent mt-1">•</span>
-                              {feature}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
               </div>
-            </motion.div>
+            </motion.article>
           ))}
         </div>
       </div>

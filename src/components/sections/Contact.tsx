@@ -2,21 +2,21 @@
 
 import { useState } from "react";
 import { SectionWrapper } from "../layout/SectionWrapper";
-import { Send, Mail, MessageSquare, User, CheckCircle2, AlertCircle } from "lucide-react";
+import { personalData } from "@/lib/data";
+import { Send, CheckCircle2, AlertCircle } from "lucide-react";
 
 export const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">(
+    "idle"
+  );
   const [statusMessage, setStatusMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     const formData = new FormData(e.currentTarget);
-    
-    // IMPORTANT: Replace this placeholder with your actual Web3Forms access key
-    // You can get one for free at https://web3forms.com/
     formData.append("access_key", "204f5ad0-efe8-4398-9c0a-12090a9641f7");
 
     try {
@@ -24,12 +24,12 @@ export const Contact = () => {
         method: "POST",
         body: formData,
       });
-      
+
       const data = await response.json();
 
       if (data.success) {
         setSubmitStatus("success");
-        setStatusMessage("Message sent successfully! I'll get back to you soon.");
+        setStatusMessage("Message sent successfully! I will get back to you soon.");
         (e.target as HTMLFormElement).reset();
       } else {
         console.error("Form error:", data);
@@ -39,10 +39,11 @@ export const Contact = () => {
     } catch (error) {
       console.error("Submission error:", error);
       setSubmitStatus("error");
-      setStatusMessage("Failed to send message. Please check your connection and try again.");
+      setStatusMessage(
+        "Failed to send message. Please check your connection and try again."
+      );
     } finally {
       setIsSubmitting(false);
-      // Reset status after 5 seconds
       setTimeout(() => {
         setSubmitStatus("idle");
       }, 5000);
@@ -50,92 +51,152 @@ export const Contact = () => {
   };
 
   return (
-    <SectionWrapper id="contact" className="bg-white/[0.01]">
-      <div className="container mx-auto px-6 max-w-4xl">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
-            Get in <span className="text-accent">Touch</span>.
-          </h2>
-          <div className="w-20 h-1 bg-accent rounded-full mx-auto mb-6" />
-          <p className="text-foreground/70 text-lg">
-            Have a project in mind or want to discuss opportunities? I'd love to hear from you.
-          </p>
-        </div>
+    <SectionWrapper id="contact">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+          <div>
+            <p className="font-mono text-xs tracking-[0.2em] text-accent uppercase">
+              Contact
+            </p>
+            <h2 className="font-display mt-3 text-3xl font-semibold tracking-tight md:text-5xl">
+              Let&apos;s build something useful
+            </h2>
+            <div className="section-rule mt-5" />
+            <p className="mt-5 text-lg leading-relaxed text-muted">
+              Have a role, project, or collaboration in mind? Reach out and I
+              will respond promptly.
+            </p>
 
-        <div className="p-8 md:p-12 rounded-3xl bg-white/[0.02] border border-white/10 shadow-2xl relative overflow-hidden">
-          {/* Background glow */}
-          <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-64 h-64 bg-accent/10 blur-[80px] rounded-full pointer-events-none" />
+            <div className="mt-8 space-y-4 text-sm">
+              <div>
+                <p className="font-mono text-xs tracking-wide text-muted uppercase">
+                  Email
+                </p>
+                <a
+                  href={`mailto:${personalData.contact.email}`}
+                  className="mt-1 inline-block font-medium text-foreground underline decoration-border underline-offset-4 hover:decoration-accent"
+                >
+                  {personalData.contact.email}
+                </a>
+              </div>
+              <div>
+                <p className="font-mono text-xs tracking-wide text-muted uppercase">
+                  Phone
+                </p>
+                <p className="mt-1 font-medium text-foreground">
+                  {personalData.contact.phone}
+                </p>
+              </div>
+              <div className="flex gap-4 pt-2">
+                <a
+                  href={personalData.contact.linkedin}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-sm font-medium text-accent underline underline-offset-4"
+                >
+                  LinkedIn
+                </a>
+                <a
+                  href={personalData.contact.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-sm font-medium text-accent underline underline-offset-4"
+                >
+                  GitHub
+                </a>
+                <a
+                  href={personalData.resumePath}
+                  download="Ankit_Kumar_Gupta_Resume.pdf"
+                  className="text-sm font-medium text-accent underline underline-offset-4"
+                >
+                  Resume
+                </a>
+              </div>
+            </div>
+          </div>
 
-          <form onSubmit={handleSubmit} className="relative z-10 space-y-6">
-            <div className="grid md:grid-cols-2 gap-6">
+          <form
+            onSubmit={handleSubmit}
+            className="border border-border bg-surface-elevated p-6 md:p-8"
+          >
+            <div className="grid gap-5 md:grid-cols-2">
               <div className="space-y-2">
-                <label htmlFor="name" className="text-sm font-medium text-foreground/80 flex items-center gap-2">
-                  <User className="w-4 h-4 text-accent" /> Name
+                <label
+                  htmlFor="name"
+                  className="text-sm font-medium text-foreground"
+                >
+                  Name
                 </label>
                 <input
                   type="text"
                   id="name"
                   name="name"
                   required
-                  className="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-all"
-                  placeholder="John Doe"
+                  className="w-full border border-border bg-background px-4 py-3 text-foreground outline-none transition-colors placeholder:text-muted/70 focus:border-accent"
+                  placeholder="Your name"
                 />
               </div>
               <div className="space-y-2">
-                <label htmlFor="email" className="text-sm font-medium text-foreground/80 flex items-center gap-2">
-                  <Mail className="w-4 h-4 text-accent" /> Email
+                <label
+                  htmlFor="email"
+                  className="text-sm font-medium text-foreground"
+                >
+                  Email
                 </label>
                 <input
                   type="email"
                   id="email"
                   name="email"
                   required
-                  className="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-all"
-                  placeholder="john@example.com"
+                  className="w-full border border-border bg-background px-4 py-3 text-foreground outline-none transition-colors placeholder:text-muted/70 focus:border-accent"
+                  placeholder="you@example.com"
                 />
               </div>
             </div>
 
-            <div className="space-y-2">
-              <label htmlFor="message" className="text-sm font-medium text-foreground/80 flex items-center gap-2">
-                <MessageSquare className="w-4 h-4 text-accent" /> Message
+            <div className="mt-5 space-y-2">
+              <label
+                htmlFor="message"
+                className="text-sm font-medium text-foreground"
+              >
+                Message
               </label>
               <textarea
                 id="message"
                 name="message"
                 required
                 rows={5}
-                className="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-all resize-none"
-                placeholder="Hi Ankit, I'd like to talk about..."
+                className="w-full resize-none border border-border bg-background px-4 py-3 text-foreground outline-none transition-colors placeholder:text-muted/70 focus:border-accent"
+                placeholder="Hi Ankit, I would like to talk about..."
               />
             </div>
 
-            {/* Hidden field for Web3Forms to prevent spam */}
             <input type="checkbox" name="botcheck" className="hidden" />
 
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full sm:w-auto px-8 py-4 bg-accent text-black font-semibold rounded-xl flex items-center justify-center gap-2 hover:bg-accent/90 transition-all hover:gap-3 group disabled:opacity-70 disabled:cursor-not-allowed"
+                className="inline-flex items-center justify-center gap-2 bg-accent px-7 py-3.5 text-sm font-semibold text-white transition-all hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
               >
                 {isSubmitting ? (
                   "Sending..."
                 ) : (
                   <>
-                    Send Message <Send className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    Send Message
+                    <Send className="h-4 w-4" />
                   </>
                 )}
               </button>
 
               {submitStatus === "success" && (
-                <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
-                  <CheckCircle2 className="w-4 h-4" /> {statusMessage}
+                <div className="flex items-center gap-2 text-sm font-medium text-accent">
+                  <CheckCircle2 className="h-4 w-4" /> {statusMessage}
                 </div>
               )}
               {submitStatus === "error" && (
-                <div className="flex items-center gap-2 text-red-400 font-medium text-sm">
-                  <AlertCircle className="w-4 h-4" /> {statusMessage}
+                <div className="flex items-center gap-2 text-sm font-medium text-red-600 dark:text-red-400">
+                  <AlertCircle className="h-4 w-4" /> {statusMessage}
                 </div>
               )}
             </div>

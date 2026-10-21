@@ -1,80 +1,90 @@
 "use client";
 
 import { SectionWrapper } from "../layout/SectionWrapper";
-import { codingProfiles } from "@/lib/data";
+import { codingProfiles, personalData } from "@/lib/data";
 import { ExternalLink } from "lucide-react";
 
 export const CodingProfiles = () => {
   return (
     <SectionWrapper id="coding-profiles">
-      <div className="container mx-auto px-6">
-        <div className="max-w-3xl mb-12">
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
-            Coding <span className="text-accent">Stats</span>.
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="max-w-2xl">
+          <p className="font-mono text-xs tracking-[0.2em] text-accent uppercase">
+            Coding Stats
+          </p>
+          <h2 className="font-display mt-3 text-3xl font-semibold tracking-tight md:text-5xl">
+            Problem solving &amp; shipping
           </h2>
-          <div className="w-20 h-1 bg-accent rounded-full mb-8" />
+          <div className="section-rule mt-5" />
+          <p className="mt-5 text-lg text-muted">
+            {personalData.stats.problemsSolved} problems solved ·{" "}
+            {personalData.stats.leetcodeRating} LeetCode rating
+          </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8 items-start">
-          {/* Problem Solving Stats */}
-          <div className="space-y-6">
-            <h3 className="text-2xl font-bold text-foreground flex items-center gap-2">
-              Problem Solving
-            </h3>
-            <div className="grid sm:grid-cols-2 gap-4">
-              {codingProfiles.problemSolving.map((profile, idx) => {
+        <div className="mt-14 grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
+          <div>
+            <h3 className="mb-5 text-lg font-semibold">Problem Solving</h3>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {codingProfiles.problemSolving.map((profile) => {
                 const Icon = profile.icon;
                 return (
                   <a
-                    key={idx}
+                    key={profile.platform}
                     href={profile.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex flex-col p-6 rounded-3xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/10 dark:border-white/10 hover:border-accent/40 hover:bg-black/5 dark:hover:bg-white/5 transition-all group relative overflow-hidden"
+                    className="group flex items-start justify-between gap-4 border border-border bg-surface-elevated p-5 transition-colors hover:border-accent"
                   >
-                    <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <ExternalLink className="w-4 h-4 text-foreground/50" />
+                    <div>
+                      <Icon className="mb-3 h-6 w-6 text-muted transition-colors group-hover:text-accent" />
+                      <h4 className="font-semibold text-foreground">
+                        {profile.platform}
+                      </h4>
+                      <p className="mt-1 text-sm text-muted">{profile.stats}</p>
                     </div>
-                    <Icon className="w-8 h-8 text-foreground/50 group-hover:text-accent mb-4 transition-colors" />
-                    <h4 className="text-lg font-bold text-foreground mb-1">{profile.platform}</h4>
-                    <p className="text-sm font-medium text-foreground/60">{profile.stats}</p>
+                    <ExternalLink className="h-4 w-4 shrink-0 text-muted opacity-0 transition-opacity group-hover:opacity-100" />
                   </a>
                 );
               })}
             </div>
           </div>
 
-          {/* Development Status */}
-          <div className="space-y-6">
-            <h3 className="text-2xl font-bold text-foreground flex items-center gap-2">
-              Development Status
-            </h3>
+          <div>
+            <h3 className="mb-5 text-lg font-semibold">Development</h3>
             <a
               href={codingProfiles.development.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="block p-8 rounded-3xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/10 dark:border-white/10 hover:border-accent/40 hover:bg-black/5 dark:hover:bg-white/5 transition-all group"
+              className="group block border border-border bg-surface p-7 transition-colors hover:border-accent"
             >
-              <div className="flex items-center justify-between mb-8">
-                <div className="flex items-center gap-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
                   {(() => {
                     const DevIcon = codingProfiles.development.icon;
-                    return <DevIcon className="w-10 h-10 text-foreground/50 group-hover:text-accent transition-colors" />;
+                    return (
+                      <DevIcon className="h-8 w-8 text-muted transition-colors group-hover:text-accent" />
+                    );
                   })()}
                   <div>
-                    <h4 className="text-xl font-bold text-foreground">{codingProfiles.development.platform}</h4>
-                    <p className="text-sm text-foreground/60">@{codingProfiles.development.username}</p>
+                    <h4 className="text-xl font-semibold">
+                      {codingProfiles.development.platform}
+                    </h4>
+                    <p className="font-mono text-sm text-muted">
+                      @{codingProfiles.development.username}
+                    </p>
                   </div>
                 </div>
-                <ExternalLink className="w-5 h-5 text-foreground/30 group-hover:text-foreground/70 transition-colors" />
+                <ExternalLink className="h-4 w-4 text-muted" />
               </div>
-              
-              {/* GitHub Custom Stats */}
-              <div className="w-full grid grid-cols-3 gap-4 mt-8">
-                {codingProfiles.development.stats.map((stat, idx) => (
-                  <div key={idx} className="flex flex-col items-center justify-center p-4 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5">
-                    <span className="text-2xl font-bold text-foreground mb-1">{stat.value}</span>
-                    <span className="text-xs font-medium text-foreground/60 text-center">{stat.label}</span>
+
+              <div className="mt-8 grid grid-cols-3 gap-3 border-t border-border pt-6">
+                {codingProfiles.development.stats.map((stat) => (
+                  <div key={stat.label}>
+                    <p className="font-display text-2xl font-semibold">
+                      {stat.value}
+                    </p>
+                    <p className="mt-1 text-xs text-muted">{stat.label}</p>
                   </div>
                 ))}
               </div>

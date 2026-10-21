@@ -23,10 +23,10 @@ export const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-      
+      setIsScrolled(window.scrollY > 16);
+
       let current = "";
-      
+
       for (const link of navLinks) {
         const id = link.href.substring(1);
         const element = document.getElementById(id);
@@ -44,63 +44,67 @@ export const Navbar = () => {
   return (
     <header
       className={cn(
-        "fixed top-0 w-full z-50 transition-all duration-300",
+        "fixed top-0 z-50 w-full transition-all duration-300",
         isScrolled
-          ? "bg-background/80 backdrop-blur-md border-b border-white/5 py-4"
-          : "bg-transparent py-6"
+          ? "border-b border-border bg-background/85 py-3 backdrop-blur-md"
+          : "bg-transparent py-5"
       )}
     >
-      <div className="container mx-auto px-6 md:px-12 flex items-center justify-between">
-        <a href="#" className="text-xl font-mono font-bold tracking-tighter text-foreground">
-          <span className="text-accent">&lt;</span>
+      <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6">
+        <a
+          href="#"
+          className="font-display text-xl font-semibold tracking-tight text-foreground"
+        >
           {personalData.name.split(" ")[0]}
-          <span className="text-accent">/&gt;</span>
+          <span className="text-accent">.</span>
         </a>
 
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden items-center gap-1 md:flex">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
               className={cn(
-                "text-sm font-medium transition-colors hover:text-accent relative",
-                activeSection === link.href ? "text-accent" : "text-foreground/80"
+                "relative px-3 py-2 text-sm font-medium transition-colors",
+                activeSection === link.href
+                  ? "text-accent"
+                  : "text-muted hover:text-foreground"
               )}
             >
               {link.name}
               {activeSection === link.href && (
-                <motion.div
+                <motion.span
                   layoutId="activeSection"
-                  className="absolute -bottom-1 left-0 right-0 h-[2px] bg-accent rounded-full"
+                  className="absolute inset-x-3 -bottom-0.5 h-px bg-accent"
                   transition={{ type: "spring", stiffness: 380, damping: 30 }}
                 />
               )}
             </a>
           ))}
+          <div className="ml-3">
             <ThemeToggle />
-          </nav>
-
-          {/* Mobile Nav Toggle */}
-          <div className="md:hidden flex items-center gap-4">
-            <ThemeToggle />
-            <button
-              className="text-foreground/80 hover:text-foreground transition-colors"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-              {isMobileMenuOpen ? <X /> : <Menu />}
-            </button>
           </div>
-        </div>
+        </nav>
 
-      {/* Mobile Menu */}
+        <div className="flex items-center gap-3 md:hidden">
+          <ThemeToggle />
+          <button
+            className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-foreground transition-colors hover:border-accent"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
+      </div>
+
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.nav
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="md:hidden absolute top-full left-0 w-full bg-background/95 backdrop-blur-lg border-b border-black/10 dark:border-white/10 py-4 px-6 flex flex-col gap-4 shadow-xl"
+            exit={{ opacity: 0, y: -12 }}
+            className="absolute left-0 top-full flex w-full flex-col gap-1 border-b border-border bg-background/95 px-6 py-4 backdrop-blur-lg md:hidden"
           >
             {navLinks.map((link) => (
               <a
@@ -108,8 +112,10 @@ export const Navbar = () => {
                 href={link.href}
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={cn(
-                  "text-lg font-medium py-2 transition-colors",
-                  activeSection === link.href ? "text-accent" : "text-foreground/80"
+                  "py-2.5 text-base font-medium transition-colors",
+                  activeSection === link.href
+                    ? "text-accent"
+                    : "text-muted hover:text-foreground"
                 )}
               >
                 {link.name}

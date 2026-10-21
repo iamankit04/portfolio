@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, HTMLMotionProps } from "framer-motion";
+import { motion, type HTMLMotionProps } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface SectionWrapperProps extends HTMLMotionProps<"section"> {
@@ -8,15 +8,20 @@ interface SectionWrapperProps extends HTMLMotionProps<"section"> {
   id: string;
 }
 
-export const SectionWrapper = ({ children, id, className, ...props }: SectionWrapperProps) => {
+export const SectionWrapper = ({
+  children,
+  id,
+  className,
+  ...props
+}: SectionWrapperProps) => {
   return (
     <motion.section
       id={id}
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className={cn("py-20 md:py-32 scroll-mt-20", className)}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+      className={cn("scroll-mt-24 py-20 md:py-28", className)}
       {...props}
     >
       {children}

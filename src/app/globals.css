@@ -1,43 +1,104 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
-  --color-brand: #0284c7;
+  --background: #eef1f4;
+  --foreground: #12161c;
+  --muted: #5a6570;
+  --surface: #f8f9fb;
+  --surface-elevated: #ffffff;
+  --border: rgba(18, 22, 28, 0.1);
+  --border-strong: rgba(18, 22, 28, 0.18);
+  --color-brand: #0e6e56;
+  --color-brand-soft: rgba(14, 110, 86, 0.12);
+  --color-ink-soft: rgba(18, 22, 28, 0.06);
+  --hero-mesh-a: #d8e8e2;
+  --hero-mesh-b: #c5d4e8;
+  --hero-mesh-c: #eef1f4;
 }
 
 .dark {
-  --background: #09090b;
-  --foreground: #ededed;
-  --color-brand: #22D3EE;
+  --background: #0c0f14;
+  --foreground: #e8eaed;
+  --muted: #9aa3ad;
+  --surface: #12171f;
+  --surface-elevated: #171d27;
+  --border: rgba(232, 234, 237, 0.1);
+  --border-strong: rgba(232, 234, 237, 0.18);
+  --color-brand: #3d9b7a;
+  --color-brand-soft: rgba(61, 155, 122, 0.16);
+  --color-ink-soft: rgba(232, 234, 237, 0.06);
+  --hero-mesh-a: #14352c;
+  --hero-mesh-b: #1a2740;
+  --hero-mesh-c: #0c0f14;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
-  --font-mono: var(--font-fira-code);
+  --color-muted: var(--muted);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
   --color-accent: var(--color-brand);
+  --color-accent-soft: var(--color-brand-soft);
+  --color-ink-soft: var(--color-ink-soft);
+  --font-sans: var(--font-outfit);
+  --font-display: var(--font-fraunces);
+  --font-mono: var(--font-ibm-plex-mono);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
-  scroll-behavior: smooth;
+  font-family: var(--font-sans), ui-sans-serif, sans-serif;
 }
 
-/* Custom Scrollbar */
+::selection {
+  background: var(--color-brand-soft);
+  color: var(--foreground);
+}
+
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
+
 ::-webkit-scrollbar-track {
-  background: #09090b;
+  background: var(--background);
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #27272a;
-  border-radius: 4px;
+  background: color-mix(in srgb, var(--foreground) 22%, transparent);
+  border-radius: 999px;
+  border: 2px solid var(--background);
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #3f3f46;
+  background: color-mix(in srgb, var(--foreground) 35%, transparent);
+}
+
+.hero-atmosphere {
+  background:
+    radial-gradient(ellipse 80% 60% at 12% 20%, var(--hero-mesh-a), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 88% 15%, var(--hero-mesh-b), transparent 50%),
+    radial-gradient(ellipse 60% 45% at 60% 90%, var(--hero-mesh-a), transparent 55%),
+    linear-gradient(180deg, var(--hero-mesh-c), var(--background));
+}
+
+.hero-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--foreground) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--foreground) 6%, transparent) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 75%);
+}
+
+.section-rule {
+  height: 1px;
+  width: 3.5rem;
+  background: var(--color-brand);
 }
