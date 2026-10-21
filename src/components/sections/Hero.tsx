@@ -107,7 +107,7 @@ export const Hero = () => {
               Contact Me
             </a>
             <a
-              href="https://drive.google.com/file/d/1TcGZGj3yoyYNJ4MPlHcyHMVyekVmon5T/view?usp=drive_link"
+              href="https://drive.google.com/file/d/1XPVuJ0qWyNLnIKgjS5b8eDmbZiKALDqw/view?usp=drivesdk"
               target="_blank"
               className="px-6 py-3 rounded-full text-foreground/80 font-medium flex items-center gap-2 hover:text-foreground transition-all underline underline-offset-4 decoration-black/20 dark:decoration-white/20 hover:decoration-accent"
             >
