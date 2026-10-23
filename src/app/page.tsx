@@ -7,13 +7,17 @@ import { Skills } from "@/components/sections/Skills";
 import { CodingProfiles } from "@/components/sections/CodingProfiles";
 import { Timeline } from "@/components/sections/Timeline";
 import { Contact } from "@/components/sections/Contact";
+import { TechMarquee } from "@/components/ui/TechMarquee";
+import { MouseGlow } from "@/components/ui/MouseGlow";
 
 export default function Home() {
   return (
     <>
+      <MouseGlow />
       <Navbar />
       <main className="flex-1">
         <Hero />
+        <TechMarquee />
         <About />
         <Projects />
         <Skills />

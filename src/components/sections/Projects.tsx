@@ -7,6 +7,7 @@ import { ExternalLink, ArrowUpRight, Sparkles, ShieldCheck } from "lucide-react"
 import { FaGithub as Github } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { SpotlightCard } from "@/components/ui/SpotlightCard";
 
 export const Projects = () => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
@@ -31,16 +32,16 @@ export const Projects = () => {
 
         <div className="mt-14 space-y-10">
           {projects.map((project, idx) => (
-            <motion.article
+            <motion.div
               key={project.title}
               layout
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="group relative overflow-hidden border border-border bg-surface-elevated transition-all duration-300 hover:border-accent/40 hover:shadow-2xl hover:shadow-accent/5"
             >
-              <div className="grid gap-0 lg:grid-cols-[1.25fr_0.95fr]">
+              <SpotlightCard className="group relative overflow-hidden transition-all duration-300 hover:border-accent/50 hover:shadow-2xl hover:shadow-accent/5">
+                <div className="grid gap-0 lg:grid-cols-[1.25fr_0.95fr]">
                 {/* Left: Project Details */}
                 <div className="flex flex-col justify-between p-8 md:p-10">
                   <div>
@@ -265,8 +266,9 @@ export const Projects = () => {
                   </div>
                 </div>
               </div>
-            </motion.article>
-          ))}
+            </SpotlightCard>
+          </motion.div>
+        ))}
         </div>
       </div>
     </SectionWrapper>
