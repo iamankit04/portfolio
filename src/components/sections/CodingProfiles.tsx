@@ -2,93 +2,111 @@
 
 import { SectionWrapper } from "../layout/SectionWrapper";
 import { codingProfiles, personalData } from "@/lib/data";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Trophy } from "lucide-react";
+import { motion } from "framer-motion";
 
 export const CodingProfiles = () => {
   return (
     <SectionWrapper id="coding-profiles">
       <div className="mx-auto max-w-6xl px-6">
         <div className="max-w-2xl">
-          <p className="font-mono text-xs tracking-[0.2em] text-accent uppercase">
+          <div className="inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent/5 px-3 py-1 text-xs font-mono tracking-[0.2em] text-accent uppercase">
+            <Trophy className="h-3.5 w-3.5" />
             Coding Stats
-          </p>
+          </div>
           <h2 className="font-display mt-3 text-3xl font-semibold tracking-tight md:text-5xl">
             Problem solving &amp; shipping
           </h2>
           <div className="section-rule mt-5" />
           <p className="mt-5 text-lg text-muted">
-            {personalData.stats.problemsSolved} problems solved ·{" "}
-            {personalData.stats.leetcodeRating} LeetCode rating
+            {personalData.stats.problemsSolved} problems solved across platforms ·{" "}
+            {personalData.stats.leetcodeRating} contest rating
           </p>
         </div>
 
         <div className="mt-14 grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
           <div>
-            <h3 className="mb-5 text-lg font-semibold">Problem Solving</h3>
+            <h3 className="mb-5 font-mono text-xs uppercase tracking-widest text-muted font-medium">
+              Competitive Programming Platforms
+            </h3>
             <div className="grid gap-3 sm:grid-cols-2">
-              {codingProfiles.problemSolving.map((profile) => {
+              {codingProfiles.problemSolving.map((profile, idx) => {
                 const Icon = profile.icon;
                 return (
-                  <a
+                  <motion.a
                     key={profile.platform}
                     href={profile.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-start justify-between gap-4 border border-border bg-surface-elevated p-5 transition-colors hover:border-accent"
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.35, delay: idx * 0.06 }}
+                    className="group relative flex items-start justify-between gap-4 border border-border bg-surface-elevated p-5 transition-all duration-300 hover:-translate-y-1 hover:border-accent hover:shadow-lg hover:shadow-accent/5"
                   >
                     <div>
-                      <Icon className="mb-3 h-6 w-6 text-muted transition-colors group-hover:text-accent" />
-                      <h4 className="font-semibold text-foreground">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-surface text-muted transition-colors group-hover:border-accent/40 group-hover:text-accent">
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <h4 className="mt-3.5 font-semibold text-foreground transition-colors group-hover:text-accent">
                         {profile.platform}
                       </h4>
-                      <p className="mt-1 text-sm text-muted">{profile.stats}</p>
+                      <p className="mt-1 font-mono text-xs text-muted">{profile.stats}</p>
                     </div>
-                    <ExternalLink className="h-4 w-4 shrink-0 text-muted opacity-0 transition-opacity group-hover:opacity-100" />
-                  </a>
+                    <ExternalLink className="h-4 w-4 shrink-0 text-muted opacity-40 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent group-hover:opacity-100" />
+                  </motion.a>
                 );
               })}
             </div>
           </div>
 
           <div>
-            <h3 className="mb-5 text-lg font-semibold">Development</h3>
-            <a
+            <h3 className="mb-5 font-mono text-xs uppercase tracking-widest text-muted font-medium">
+              Development Activity
+            </h3>
+            <motion.a
               href={codingProfiles.development.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="group block border border-border bg-surface p-7 transition-colors hover:border-accent"
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4 }}
+              className="group block border border-border bg-surface-elevated p-7 transition-all duration-300 hover:-translate-y-1 hover:border-accent hover:shadow-xl hover:shadow-accent/5"
             >
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3.5">
                   {(() => {
                     const DevIcon = codingProfiles.development.icon;
                     return (
-                      <DevIcon className="h-8 w-8 text-muted transition-colors group-hover:text-accent" />
+                      <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-border bg-surface text-foreground transition-colors group-hover:border-accent/50 group-hover:text-accent">
+                        <DevIcon className="h-6 w-6" />
+                      </div>
                     );
                   })()}
                   <div>
-                    <h4 className="text-xl font-semibold">
+                    <h4 className="text-xl font-semibold text-foreground transition-colors group-hover:text-accent">
                       {codingProfiles.development.platform}
                     </h4>
-                    <p className="font-mono text-sm text-muted">
+                    <p className="font-mono text-xs text-muted">
                       @{codingProfiles.development.username}
                     </p>
                   </div>
                 </div>
-                <ExternalLink className="h-4 w-4 text-muted" />
+                <ExternalLink className="h-4 w-4 text-muted transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent" />
               </div>
 
               <div className="mt-8 grid grid-cols-3 gap-3 border-t border-border pt-6">
                 {codingProfiles.development.stats.map((stat) => (
                   <div key={stat.label}>
-                    <p className="font-display text-2xl font-semibold">
+                    <p className="font-display text-2xl font-semibold text-foreground">
                       {stat.value}
                     </p>
-                    <p className="mt-1 text-xs text-muted">{stat.label}</p>
+                    <p className="mt-1 font-mono text-[11px] text-muted">{stat.label}</p>
                   </div>
                 ))}
               </div>
-            </a>
+            </motion.a>
           </div>
         </div>
       </div>

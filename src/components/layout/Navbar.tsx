@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { personalData } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
@@ -20,6 +20,13 @@ export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
+
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,10 +53,16 @@ export const Navbar = () => {
       className={cn(
         "fixed top-0 z-50 w-full transition-all duration-300",
         isScrolled
-          ? "border-b border-border bg-background/85 py-3 backdrop-blur-md"
+          ? "border-b border-border bg-background/80 py-3 backdrop-blur-md shadow-sm"
           : "bg-transparent py-5"
       )}
     >
+      {/* Scroll progress line */}
+      <motion.div
+        className="absolute bottom-0 left-0 right-0 h-[2px] origin-left bg-gradient-to-r from-accent via-emerald-400 to-accent"
+        style={{ scaleX }}
+      />
+
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6">
         <a
           href="#"

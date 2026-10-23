@@ -83,6 +83,10 @@ export const education = [
 export const projects = [
   {
     title: "Rydex",
+    category: "Mobility & Fleet Architecture",
+    badge: "Featured Production Platform",
+    image: "/projects/rydex.png",
+    imageType: "banner" as const,
     description:
       "Multi-Partner Vehicle Booking Platform featuring multi-role dashboards, automated revenue split, real-time tracking, and video KYC.",
     longDescription:
@@ -109,9 +113,15 @@ export const projects = [
       "AI-powered in-ride chat",
       "Jigo Cloud video KYC",
     ],
+    highlights: ["90/10 Revenue Split", "Live Ride Tracking", "Jigo Video KYC"],
+    roles: "User · Partner · Admin",
   },
   {
     title: "MultiCart",
+    category: "Full-Stack E-Commerce",
+    badge: "Multi-Vendor Marketplace",
+    image: "/projects/multicart.webp",
+    imageType: "logo" as const,
     description:
       "Multi-Vendor E-Commerce Platform with vendor verification, complex return/refund workflows, and AI support.",
     longDescription:
@@ -138,6 +148,8 @@ export const projects = [
       "Returns and refunds management",
       "AI chat support",
     ],
+    highlights: ["Stripe Connect", "Vendor Verification Flow", "AI Support Chat"],
+    roles: "User · Vendor · Admin",
   },
 ];
 

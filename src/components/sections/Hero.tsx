@@ -2,23 +2,41 @@
 
 import { motion } from "framer-motion";
 import { personalData } from "@/lib/data";
-import { ArrowRight, Download } from "lucide-react";
+import { ArrowRight, Download, Terminal, Layers, Cloud, Sparkles } from "lucide-react";
 
 export const Hero = () => {
   return (
     <section
-      className="relative flex min-h-screen items-center overflow-hidden pt-24 pb-16"
+      className="relative flex min-h-screen items-center overflow-hidden pt-28 pb-20"
       id="hero"
     >
       <div className="hero-atmosphere absolute inset-0" />
       <div className="hero-grid absolute inset-0" />
 
+      {/* Ambient floating glow elements */}
+      <div className="pointer-events-none absolute -top-24 -left-24 h-96 w-96 rounded-full bg-accent/15 blur-3xl animate-pulse-glow" />
+      <div className="pointer-events-none absolute top-1/3 -right-28 h-96 w-96 rounded-full bg-emerald-500/10 blur-3xl animate-float" />
+
       <div className="relative z-10 mx-auto w-full max-w-6xl px-6">
+        {/* Status pill */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-border bg-surface-elevated/80 px-4 py-1.5 text-xs font-mono text-foreground/80 backdrop-blur-md shadow-sm"
+        >
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+          </span>
+          <span>Available for SDE &amp; DevOps Opportunities</span>
+        </motion.div>
+
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mb-5 font-mono text-sm tracking-[0.18em] text-accent uppercase"
+          transition={{ duration: 0.5, delay: 0.05 }}
+          className="mb-4 font-mono text-xs sm:text-sm tracking-[0.2em] text-accent uppercase font-medium"
         >
           {personalData.title}
         </motion.p>
@@ -26,50 +44,108 @@ export const Hero = () => {
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.08 }}
+          transition={{ duration: 0.6, delay: 0.12 }}
           className="font-display max-w-4xl text-5xl leading-[1.05] font-semibold tracking-tight text-foreground sm:text-6xl md:text-7xl lg:text-8xl"
         >
-          {personalData.name}
+          <span className="shimmer-text">{personalData.name}</span>
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, delay: 0.18 }}
+          transition={{ duration: 0.55, delay: 0.2 }}
           className="mt-7 max-w-2xl text-lg leading-relaxed text-muted md:text-xl"
         >
           {personalData.shortIntro}
         </motion.p>
 
+        {/* Action Buttons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.28 }}
-          className="mt-10 flex flex-wrap items-center gap-3"
+          className="mt-10 flex flex-wrap items-center gap-4"
         >
-          <a
+          <motion.a
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             href="#projects"
-            className="inline-flex items-center gap-2 bg-accent px-6 py-3.5 text-sm font-semibold text-white transition-all hover:gap-3 hover:brightness-110"
+            className="group inline-flex items-center gap-2 bg-accent px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-accent/20 transition-all hover:brightness-110"
           >
-            View Work
-            <ArrowRight className="h-4 w-4" />
-          </a>
-          <a
+            <span>View Featured Work</span>
+            <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+          </motion.a>
+          <motion.a
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             href="#contact"
-            className="inline-flex items-center gap-2 border border-border-strong bg-surface-elevated px-6 py-3.5 text-sm font-semibold text-foreground transition-colors hover:border-accent"
+            className="inline-flex items-center gap-2 border border-border-strong bg-surface-elevated/90 px-6 py-3.5 text-sm font-semibold text-foreground backdrop-blur-sm transition-colors hover:border-accent"
           >
             Contact Me
-          </a>
-          <a
+          </motion.a>
+          <motion.a
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             href={personalData.resumePath}
             download="Ankit_Kumar_Gupta_Resume.pdf"
             className="inline-flex items-center gap-2 px-4 py-3.5 text-sm font-medium text-muted underline decoration-border-strong underline-offset-4 transition-colors hover:text-foreground hover:decoration-accent"
           >
             <Download className="h-4 w-4" />
-            Download Resume
-          </a>
+            Resume
+          </motion.a>
         </motion.div>
 
+        {/* Quick Highlights Strip */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, delay: 0.38 }}
+          className="mt-14 grid grid-cols-2 gap-3 border-t border-border/80 pt-8 sm:grid-cols-4 sm:gap-4"
+        >
+          <div className="border border-border/60 bg-surface-elevated/60 p-4 backdrop-blur-sm transition-all duration-200 hover:border-accent/40 hover:-translate-y-0.5">
+            <div className="flex items-center gap-2 text-accent">
+              <Terminal className="h-4 w-4" />
+              <span className="font-mono text-xs uppercase tracking-wider">DSA Stats</span>
+            </div>
+            <p className="font-display mt-2 text-2xl font-semibold text-foreground">
+              {personalData.stats.problemsSolved}
+            </p>
+            <p className="mt-0.5 text-xs text-muted">Problems Solved</p>
+          </div>
+
+          <div className="border border-border/60 bg-surface-elevated/60 p-4 backdrop-blur-sm transition-all duration-200 hover:border-accent/40 hover:-translate-y-0.5">
+            <div className="flex items-center gap-2 text-accent">
+              <Sparkles className="h-4 w-4" />
+              <span className="font-mono text-xs uppercase tracking-wider">LeetCode</span>
+            </div>
+            <p className="font-display mt-2 text-2xl font-semibold text-foreground">
+              {personalData.stats.leetcodeRating}
+            </p>
+            <p className="mt-0.5 text-xs text-muted">Contest Rating</p>
+          </div>
+
+          <div className="border border-border/60 bg-surface-elevated/60 p-4 backdrop-blur-sm transition-all duration-200 hover:border-accent/40 hover:-translate-y-0.5">
+            <div className="flex items-center gap-2 text-accent">
+              <Cloud className="h-4 w-4" />
+              <span className="font-mono text-xs uppercase tracking-wider">DevOps</span>
+            </div>
+            <p className="font-display mt-2 text-base font-semibold text-foreground truncate">
+              K8s · Docker
+            </p>
+            <p className="mt-0.5 text-xs text-muted">Terraform &amp; AWS</p>
+          </div>
+
+          <div className="border border-border/60 bg-surface-elevated/60 p-4 backdrop-blur-sm transition-all duration-200 hover:border-accent/40 hover:-translate-y-0.5">
+            <div className="flex items-center gap-2 text-accent">
+              <Layers className="h-4 w-4" />
+              <span className="font-mono text-xs uppercase tracking-wider">Full Stack</span>
+            </div>
+            <p className="font-display mt-2 text-base font-semibold text-foreground truncate">
+              Next.js · TS
+            </p>
+            <p className="mt-0.5 text-xs text-muted">Node.js &amp; Mongo</p>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

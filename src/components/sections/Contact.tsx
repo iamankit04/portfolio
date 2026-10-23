@@ -3,14 +3,22 @@
 import { useState } from "react";
 import { SectionWrapper } from "../layout/SectionWrapper";
 import { personalData } from "@/lib/data";
-import { Send, CheckCircle2, AlertCircle } from "lucide-react";
+import { Send, CheckCircle2, AlertCircle, Copy, Check, Mail, Phone, MessageSquare } from "lucide-react";
+import { motion } from "framer-motion";
 
 export const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [copied, setCopied] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">(
     "idle"
   );
   const [statusMessage, setStatusMessage] = useState("");
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText(personalData.contact.email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -55,9 +63,10 @@ export const Contact = () => {
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
-            <p className="font-mono text-xs tracking-[0.2em] text-accent uppercase">
+            <div className="inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent/5 px-3 py-1 text-xs font-mono tracking-[0.2em] text-accent uppercase">
+              <MessageSquare className="h-3.5 w-3.5" />
               Contact
-            </p>
+            </div>
             <h2 className="font-display mt-3 text-3xl font-semibold tracking-tight md:text-5xl">
               Let&apos;s build something useful
             </h2>
@@ -67,49 +76,81 @@ export const Contact = () => {
               will respond promptly.
             </p>
 
-            <div className="mt-8 space-y-4 text-sm">
-              <div>
-                <p className="font-mono text-xs tracking-wide text-muted uppercase">
-                  Email
-                </p>
-                <a
-                  href={`mailto:${personalData.contact.email}`}
-                  className="mt-1 inline-block font-medium text-foreground underline decoration-border underline-offset-4 hover:decoration-accent"
+            <div className="mt-8 space-y-4">
+              <div className="group relative flex items-center justify-between border border-border bg-surface-elevated p-4 transition-colors hover:border-accent">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-surface text-accent">
+                    <Mail className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <p className="font-mono text-[10px] uppercase tracking-wider text-muted">
+                      Direct Email
+                    </p>
+                    <a
+                      href={`mailto:${personalData.contact.email}`}
+                      className="font-medium text-foreground hover:text-accent transition-colors text-sm"
+                    >
+                      {personalData.contact.email}
+                    </a>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleCopyEmail}
+                  className="inline-flex items-center gap-1.5 rounded border border-border bg-surface px-2.5 py-1 text-xs font-mono text-muted transition-colors hover:border-accent hover:text-foreground"
+                  title="Copy email to clipboard"
                 >
-                  {personalData.contact.email}
-                </a>
+                  {copied ? (
+                    <>
+                      <Check className="h-3.5 w-3.5 text-accent" />
+                      <span className="text-accent">Copied</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="h-3.5 w-3.5" />
+                      <span>Copy</span>
+                    </>
+                  )}
+                </button>
               </div>
-              <div>
-                <p className="font-mono text-xs tracking-wide text-muted uppercase">
-                  Phone
-                </p>
-                <p className="mt-1 font-medium text-foreground">
-                  {personalData.contact.phone}
-                </p>
+
+              <div className="flex items-center gap-3 border border-border bg-surface-elevated p-4">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-surface text-accent">
+                  <Phone className="h-4 w-4" />
+                </div>
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-wider text-muted">
+                    Phone
+                  </p>
+                  <p className="font-medium text-foreground text-sm">
+                    +91 {personalData.contact.phone}
+                  </p>
+                </div>
               </div>
-              <div className="flex gap-4 pt-2">
+
+              <div className="flex flex-wrap gap-3 pt-3">
                 <a
                   href={personalData.contact.linkedin}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-sm font-medium text-accent underline underline-offset-4"
+                  className="border border-border bg-surface-elevated px-4 py-2 font-mono text-xs font-medium text-foreground transition-all hover:border-accent hover:text-accent hover:-translate-y-0.5"
                 >
-                  LinkedIn
+                  LinkedIn ↗
                 </a>
                 <a
                   href={personalData.contact.github}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-sm font-medium text-accent underline underline-offset-4"
+                  className="border border-border bg-surface-elevated px-4 py-2 font-mono text-xs font-medium text-foreground transition-all hover:border-accent hover:text-accent hover:-translate-y-0.5"
                 >
-                  GitHub
+                  GitHub ↗
                 </a>
                 <a
                   href={personalData.resumePath}
                   download="Ankit_Kumar_Gupta_Resume.pdf"
-                  className="text-sm font-medium text-accent underline underline-offset-4"
+                  className="border border-border bg-surface-elevated px-4 py-2 font-mono text-xs font-medium text-foreground transition-all hover:border-accent hover:text-accent hover:-translate-y-0.5"
                 >
-                  Resume
+                  Resume PDF ↗
                 </a>
               </div>
             </div>
